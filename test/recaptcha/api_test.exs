@@ -1,5 +1,6 @@
 defmodule Recaptcha.APITest do
   use ExUnit.Case, async: true
+  doctest Recaptcha.API
 
   alias Recaptcha.API
   alias Recaptcha.API.Response

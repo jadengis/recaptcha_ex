@@ -16,25 +16,27 @@ defmodule Recaptcha.API do
   ]
 
   @doc """
-  Create a new GoogleAI client with the given `opts`.
+  Create a new Recaptcha client with the given `opts`.
 
   ## Options
 
   #{NimbleOptions.docs(@opts_schema)}
   ## Examples
 
-    iex> Recaptcha.client(secret: "asdfasdf")
-    %Recaptcha.Client{
+    iex> Recaptcha.API.client(secret: "asdfasdf")
+    %Recaptcha.API.Client{
       req: Req.new(
         base_url: "https://www.google.com", 
+        headers: %{"accept" => ["application/json"], "content-type" => ["application/x-www-form-urlencoded"]}
       ),
       secret: "asdfasdf"
     }
 
-    iex> Recaptcha.client(base_url: "https://example.com", secret: "asdfasdf")
-    %Recaptcha.Client{
+    iex> Recaptcha.API.client(base_url: "https://example.com", secret: "asdfasdf")
+    %Recaptcha.API.Client{
       req: Req.new(
         base_url: "https://example.com", 
+        headers: %{"accept" => ["application/json"], "content-type" => ["application/x-www-form-urlencoded"]}
       ),
       secret: "asdfasdf"
     }
