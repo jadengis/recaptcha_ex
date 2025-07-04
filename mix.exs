@@ -33,6 +33,7 @@ defmodule Recaptcha.MixProject do
   defp deps do
     [
       {:req, "~> 0.4"},
+      {:nimble_options, "~> 1.0"},
       {:plug, "~> 1.14", optional: true},
       {:phoenix_live_view, ">= 0.0.0", optional: true},
       {:bypass, "~> 2.1", only: :test},

@@ -6,17 +6,18 @@ if Code.ensure_loaded?(Plug) do
     alias Recaptcha.API
     alias Recaptcha.API.Response
     alias Recaptcha.APIError
+    alias Recaptcha.VerificationError
 
     @behaviour Plug
 
     @recaptcha_form_field "g-recaptcha-response"
 
     @impl Plug
-    def init(opts), do: opts
+    def init(opts), do: opts |> Keyword.put_new(:client, Recaptcha.API.client())
 
     @impl Plug
-    def call(%{params: %{@recaptcha_form_field => token}} = conn, _opts) do
-      token |> API.verify() |> handle_response(conn)
+    def call(%{params: %{@recaptcha_form_field => token}} = conn, opts) do
+      opts[:client] |> API.verify(token) |> handle_response(conn)
     end
 
     def call(conn, _opts), do: conn
@@ -27,7 +28,7 @@ if Code.ensure_loaded?(Plug) do
     end
 
     defp handle_response({:ok, %Response{success: false, "error-codes": error_codes}}, _conn) do
-      raise APIError, error: error_codes
+      raise VerificationError, error_codes: error_codes
     end
 
     defp handle_response({:error, reason}, _conn) do

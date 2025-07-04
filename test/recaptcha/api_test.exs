@@ -9,13 +9,18 @@ defmodule Recaptcha.APITest do
 
   setup do
     bypass = Bypass.open()
-    put_application_env_for_test(:recaptcha, :host, endpoint_url(bypass.port))
-    put_application_env_for_test(:recaptcha, :secret, @secret)
-    %{bypass: bypass}
+
+    client =
+      Recaptcha.API.client(
+        base_url: endpoint_url(bypass.port),
+        secret: @secret
+      )
+
+    %{bypass: bypass, client: client}
   end
 
   describe "verify/1" do
-    test "performs a POST request using the supplied token", %{bypass: bypass} do
+    test "performs a POST request using the supplied token", %{bypass: bypass, client: client} do
       Bypass.expect_once(bypass, "POST", "/recaptcha/api/siteverify", fn conn ->
         conn = parse_body(conn)
         assert conn.params["secret"] == @secret
@@ -33,10 +38,13 @@ defmodule Recaptcha.APITest do
                 action: "contact",
                 hostname: "example.com",
                 "error-codes": []
-              }} = API.verify(@token)
+              }} = API.verify(client, @token)
     end
 
-    test "returns an :ok tuple with a 200 code and error response data", %{bypass: bypass} do
+    test "returns an :ok tuple with a 200 code and error response data", %{
+      bypass: bypass,
+      client: client
+    } do
       Bypass.expect_once(bypass, "POST", "/recaptcha/api/siteverify", fn conn ->
         conn = parse_body(conn)
         assert conn.params["secret"] == @secret
@@ -54,10 +62,13 @@ defmodule Recaptcha.APITest do
                 action: "contact",
                 hostname: "example.com",
                 "error-codes": ["invalid-input-response"]
-              }} = API.verify(@token)
+              }} = API.verify(client, @token)
     end
 
-    test "returns an :error tuple with a non-200 code and error response data", %{bypass: bypass} do
+    test "returns an :error tuple with a non-200 code and error response data", %{
+      bypass: bypass,
+      client: client
+    } do
       Bypass.expect_once(bypass, "POST", "/recaptcha/api/siteverify", fn conn ->
         conn = parse_body(conn)
         assert conn.params["secret"] == @secret
@@ -75,17 +86,11 @@ defmodule Recaptcha.APITest do
                 "action" => "contact",
                 "hostname" => "example.com",
                 "error-codes" => ["invalid-input-response"]
-              }} = API.verify(@token)
+              }} = API.verify(client, @token)
     end
   end
 
   defp endpoint_url(port), do: "http://localhost:#{port}"
-
-  defp put_application_env_for_test(app, key, value) do
-    previous_value = Application.get_env(app, key)
-    Application.put_env(app, key, value)
-    on_exit(fn -> Application.put_env(app, key, previous_value) end)
-  end
 
   defp parse_body(conn) do
     opts =

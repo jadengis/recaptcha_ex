@@ -9,9 +9,9 @@ defmodule Recaptcha do
   @type t :: __MODULE__.API.Response.t()
 
   @doc """
-  Fetch the recaptcha host from the application configuration.
+  Fetch the recaptcha base_url from the application configuration.
   """
-  def host(), do: Application.get_env(:recaptcha, :host, "https://www.google.com")
+  def base_url(), do: Application.get_env(:recaptcha, :base_url, "https://www.google.com")
 
   @doc """
   Fetch the recaptcha site key from the application configuration.
