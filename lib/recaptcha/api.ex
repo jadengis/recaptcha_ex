@@ -127,15 +127,15 @@ defmodule Recaptcha.API do
   ## Examples
 
       # Successful verification
-      iex> client = Recaptcha.API.client(secret: "valid_secret")
-      iex> # Note: This would require a valid token and network access
-      iex> # {:ok, %Recaptcha.API.Response{success: true, score: 0.9}} = Recaptcha.API.verify(client, "valid_token")
+      client = Recaptcha.API.client(secret: "valid_secret")
+      # Note: This would require a valid token and network access
+      {:ok, %Recaptcha.API.Response{success: true, score: 0.9}} = Recaptcha.API.verify(client, "valid_token")
 
       # Using default client
-      iex> # Recaptcha.API.verify("token_string")
-
+      Recaptcha.API.verify("token_string")
       # Failed verification returns error tuple
-      iex> # {:error, %{"success" => false, "error-codes" => ["invalid-input-response"]}}
+      {:error, %{"success" => false, "error-codes" => ["invalid-input-response"]}}
+
 
   ## Response
 

@@ -9,7 +9,7 @@ defmodule Recaptcha.MixProject do
     [
       app: :recaptcha,
       version: @version,
-      elixir: "~> 1.13",
+      elixir: "~> 1.15",
       exlirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       deps: deps(),
