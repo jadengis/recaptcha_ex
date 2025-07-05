@@ -16,7 +16,7 @@ defmodule Recaptcha.ComponentsTest do
     assert {:ok, html} =
              rendered_to_string(~H"""
              <.recaptcha :let={recaptcha} form_id="form_id" action="login">
-              <button id="submit_button" {recaptcha}>Submit</button>
+               <button id="submit_button" {recaptcha}>Submit</button>
              </.recaptcha>
              """)
              |> Floki.parse_fragment()

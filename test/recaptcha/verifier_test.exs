@@ -178,4 +178,3 @@ defmodule Recaptcha.VerifierTest do
   "error-codes": []
 }>
 end
-
