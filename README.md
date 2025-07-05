@@ -2,8 +2,8 @@
 
 A modern Elixir library for Google reCAPTCHA v3 integration with Phoenix applications.
 
-[![Hex.pm](https://img.shields.io/hexpm/v/recaptcha.svg)](https://hex.pm/packages/recaptcha)
-[![Documentation](https://img.shields.io/badge/documentation-hexdocs-blue.svg)](https://hexdocs.pm/recaptcha)
+[![Hex.pm](https://img.shields.io/hexpm/v/recaptcha_v3.svg)](https://hex.pm/packages/recaptcha)
+[![Documentation](https://img.shields.io/badge/documentation-hexdocs-blue.svg)](https://hexdocs.pm/recaptcha_v3)
 
 ## Features
 

@@ -7,7 +7,7 @@ defmodule Recaptcha.MixProject do
 
   def project do
     [
-      app: :recaptcha,
+      app: :recaptcha_v3,
       version: @version,
       elixir: "~> 1.15",
       exlirc_paths: elixirc_paths(Mix.env()),
